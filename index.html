@@ -328,6 +328,196 @@
     .feature-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.82; font-weight: 300; }
     html[dir="rtl"] .feature-desc { font-size: 0.94rem; line-height: 2; }
 
+    /* ─── SCREENSHOTS SECTION ─── */
+    .screenshots-section {
+      position: relative; z-index: 1;
+      padding: 100px 80px;
+      background: var(--cream);
+      overflow: hidden;
+    }
+    .screenshots-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(180,150,100,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(180,150,100,0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+    .screenshots-inner { max-width: 1300px; margin: 0 auto; }
+
+    .screenshots-header {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: end; margin-bottom: 64px;
+    }
+
+    /* Carousel wrapper */
+    .screenshots-carousel {
+      position: relative;
+    }
+    .carousel-track-wrap {
+      overflow: hidden;
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      background: var(--charcoal);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.06), 0 32px 80px rgba(0,0,0,0.16);
+    }
+
+    /* Fake browser chrome */
+    .browser-chrome {
+      background: #1e1a17;
+      padding: 12px 18px;
+      display: flex; align-items: center; gap: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .browser-dots { display: flex; gap: 6px; }
+    .browser-dot {
+      width: 11px; height: 11px; border-radius: 50%;
+    }
+    .browser-dot.red   { background: #ff5f57; }
+    .browser-dot.yellow{ background: #febc2e; }
+    .browser-dot.green { background: #28c840; }
+    .browser-bar {
+      flex: 1; height: 24px; background: rgba(255,255,255,0.06);
+      border-radius: 4px; display: flex; align-items: center;
+      padding: 0 12px;
+    }
+    .browser-bar-text {
+      font-size: 0.68rem; color: rgba(255,255,255,0.28); letter-spacing: 0.05em;
+      font-family: 'Jost', sans-serif;
+    }
+
+    /* Main image area */
+    .carousel-main {
+      position: relative;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      background: #1a1613;
+    }
+    .carousel-slide {
+      position: absolute; inset: 0;
+      opacity: 0;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      transform: scale(1.02);
+    }
+    .carousel-slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .carousel-slide img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top left;
+      display: block;
+    }
+
+    /* Slide counter overlay */
+    .slide-counter {
+      position: absolute; bottom: 18px; right: 18px;
+      background: rgba(42,36,32,0.75); backdrop-filter: blur(8px);
+      border: 1px solid rgba(201,168,76,0.25);
+      padding: 5px 14px; border-radius: 20px;
+      font-size: 0.7rem; letter-spacing: 0.1em; color: rgba(255,252,240,0.7);
+      font-family: 'Jost', sans-serif; z-index: 5;
+    }
+
+    /* Navigation arrows */
+    .carousel-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      display: flex; justify-content: space-between;
+      width: 100%; padding: 0 16px; z-index: 6;
+      pointer-events: none;
+    }
+    .carousel-btn {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: rgba(42,36,32,0.82); backdrop-filter: blur(10px);
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold-light); font-size: 1.1rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; pointer-events: all;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    }
+    .carousel-btn:hover {
+      background: var(--gold-dark);
+      border-color: var(--gold);
+      transform: scale(1.08);
+    }
+
+    /* Thumbnails strip */
+    .carousel-thumbs {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+      margin-top: 14px;
+    }
+    .thumb {
+      position: relative; overflow: hidden;
+      border-radius: 3px; cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.25s;
+      aspect-ratio: 16/9;
+      background: var(--warm-white);
+    }
+    .thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top left;
+      display: block;
+      transition: transform 0.3s;
+    }
+    .thumb:hover img { transform: scale(1.05); }
+    .thumb.active {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px var(--gold-light);
+    }
+    .thumb::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(201,168,76,0); transition: background 0.2s;
+    }
+    .thumb.active::after { background: rgba(201,168,76,0.08); }
+
+    /* Thumb label */
+    .thumb-label {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 4px 7px;
+      background: linear-gradient(to top, rgba(42,36,32,0.85), transparent);
+      font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,252,240,0.8); font-family: 'Jost', sans-serif;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .thumb:hover .thumb-label, .thumb.active .thumb-label { opacity: 1; }
+
+    /* Screenshot caption */
+    .screenshot-caption {
+      margin-top: 28px; padding: 20px 28px;
+      background: var(--warm-white); border: 1px solid var(--border);
+      border-radius: 3px;
+      display: flex; align-items: center; gap: 18px;
+    }
+    .caption-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem; font-weight: 300; color: var(--gold);
+      line-height: 1; flex-shrink: 0; min-width: 42px;
+    }
+    .caption-divider { width: 1px; height: 36px; background: var(--border-strong); flex-shrink: 0; }
+    .caption-text-wrap { flex: 1; }
+    .caption-title {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.05rem;
+      font-weight: 600; color: var(--charcoal); letter-spacing: 0.04em; margin-bottom: 4px;
+    }
+    html[dir="rtl"] .caption-title { font-family: 'Noto Naskh Arabic', serif; }
+    .caption-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+    html[dir="rtl"] .caption-desc { font-family: 'Noto Naskh Arabic', serif; font-size: 0.88rem; line-height: 1.9; }
+
+    /* Auto-play dots */
+    .carousel-dots {
+      display: flex; justify-content: center; gap: 8px; margin-top: 20px;
+    }
+    .carousel-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--border-strong); cursor: pointer;
+      transition: all 0.25s;
+    }
+    .carousel-dot.active {
+      background: var(--gold); transform: scale(1.3);
+    }
+
     /* SERVICES SHOWCASE */
     .services-section {
       position: relative; z-index: 1;
@@ -455,10 +645,16 @@
       .download-banner { grid-template-columns: 1fr; padding: 40px 30px; gap: 28px; }
       nav { padding: 16px 24px; }
       footer { padding: 28px 24px; flex-direction: column; text-align: center; }
+      .screenshots-section { padding: 60px 24px; }
+      .screenshots-header { grid-template-columns: 1fr; gap: 18px; }
+      .carousel-thumbs { grid-template-columns: repeat(5, 1fr); gap: 6px; }
     }
     @media (max-width: 600px) {
       .features-grid { grid-template-columns: 1fr; }
       h1 { font-size: 2.6rem; }
+      .carousel-thumbs { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+      .screenshot-caption { flex-direction: column; gap: 10px; }
+      .caption-divider { width: 40px; height: 1px; }
     }
   </style>
 </head>
@@ -681,6 +877,114 @@
     </div>
   </div>
 
+  <!-- ─── SCREENSHOTS SECTION ─── -->
+  <div id="screenshots" class="screenshots-section reveal">
+    <div class="screenshots-inner">
+      <div class="screenshots-header">
+        <div>
+          <div class="section-eyebrow">
+            <div class="eyebrow-line-s"></div>
+            <div class="section-label-text ltr-only">In Action</div>
+            <div class="section-label-text rtl-only">من داخل النظام</div>
+          </div>
+          <h2 class="section-title ltr-only">See it for <em>yourself.</em></h2>
+          <h2 class="section-title rtl-only">شاهده <em>بنفسك.</em></h2>
+        </div>
+        <p class="section-desc ltr-only">Real screenshots from the live system — every screen you'll interact with, from the POS counter to the manager's analytics dashboard.</p>
+        <p class="section-desc rtl-only">لقطات شاشة حقيقية من النظام الفعلي — كل شاشة ستتعامل معها، من نقطة البيع إلى لوحة تحليلات المدير.</p>
+      </div>
+
+      <div class="screenshots-carousel">
+        <!-- Main viewer -->
+        <div class="carousel-track-wrap">
+          <div class="browser-chrome">
+            <div class="browser-dots">
+              <div class="browser-dot red"></div>
+              <div class="browser-dot yellow"></div>
+              <div class="browser-dot green"></div>
+            </div>
+            <div class="browser-bar">
+              <span class="browser-bar-text ltr-only">Velour POS — Beauty & Salon Management System</span>
+              <span class="browser-bar-text rtl-only">فيلور POS — نظام إدارة الصالونات</span>
+            </div>
+          </div>
+          <div class="carousel-main" id="carouselMain">
+            <div class="carousel-slide active" data-index="0">
+              <img src="https://raw.githubusercontent.com/MaqdadShow/Salon-POS-APP/refs/heads/main/Screenshot%20(10).png" alt="Screenshot 10" loading="lazy">
+            </div>
+            <div class="carousel-slide" data-index="1">
+              <img src="https://raw.githubusercontent.com/MaqdadShow/Salon-POS-APP/refs/heads/main/Screenshot%20(11).png" alt="Screenshot 11" loading="lazy">
+            </div>
+            <div class="carousel-slide" data-index="2">
+              <img src="https://raw.githubusercontent.com/MaqdadShow/Salon-POS-APP/refs/heads/main/Screenshot%20(12).png" alt="Screenshot 12" loading="lazy">
+            </div>
+            <div class="carousel-slide" data-index="3">
+              <img src="https://raw.githubusercontent.com/MaqdadShow/Salon-POS-APP/refs/heads/main/Screenshot%20(13).png" alt="Screenshot 13" loading="lazy">
+            </div>
+            <div class="carousel-slide" data-index="4">
+              <img src="https://raw.githubusercontent.com/MaqdadShow/Salon-POS-APP/refs/heads/main/Screenshot%20(14).png" alt="Screenshot 14" loading="lazy">
+            </div>
+            <div class="slide-counter" id="slideCounter">1 / 5</div>
+            <div class="carousel-nav">
+              <button class="carousel-btn" id="prevBtn" aria-label="Previous">&#8592;</button>
+              <button class="carousel-btn" id="nextBtn" aria-label="Next">&#8594;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dots -->
+        <div class="carousel-dots" id="carouselDots">
+          <div class="carousel-dot active" data-index="0"></div>
+          <div class="carousel-dot" data-index="1"></div>
+          <div class="carousel-dot" data-index="2"></div>
+          <div class="carousel-dot" data-index="3"></div>
+          <div class="carousel-dot" data-index="4"></div>
+        </div>
+
+        <!-- Thumbnails -->
+        <div class="carousel-thumbs" id="carouselThumbs">
+          <div class="thumb active" data-index="0">
+            <img src="https://raw.githubusercontent.com/MaqdadShow/Salon-POS-APP/refs/heads/main/Screenshot%20(10).png" alt="Screen 1" loading="lazy">
+            <div class="thumb-label ltr-only">Screen 1</div>
+            <div class="thumb-label rtl-only">شاشة ١</div>
+          </div>
+          <div class="thumb" data-index="1">
+            <img src="https://raw.githubusercontent.com/MaqdadShow/Salon-POS-APP/refs/heads/main/Screenshot%20(11).png" alt="Screen 2" loading="lazy">
+            <div class="thumb-label ltr-only">Screen 2</div>
+            <div class="thumb-label rtl-only">شاشة ٢</div>
+          </div>
+          <div class="thumb" data-index="2">
+            <img src="https://raw.githubusercontent.com/MaqdadShow/Salon-POS-APP/refs/heads/main/Screenshot%20(12).png" alt="Screen 3" loading="lazy">
+            <div class="thumb-label ltr-only">Screen 3</div>
+            <div class="thumb-label rtl-only">شاشة ٣</div>
+          </div>
+          <div class="thumb" data-index="3">
+            <img src="https://raw.githubusercontent.com/MaqdadShow/Salon-POS-APP/refs/heads/main/Screenshot%20(13).png" alt="Screen 4" loading="lazy">
+            <div class="thumb-label ltr-only">Screen 4</div>
+            <div class="thumb-label rtl-only">شاشة ٤</div>
+          </div>
+          <div class="thumb" data-index="4">
+            <img src="https://raw.githubusercontent.com/MaqdadShow/Salon-POS-APP/refs/heads/main/Screenshot%20(14).png" alt="Screen 5" loading="lazy">
+            <div class="thumb-label ltr-only">Screen 5</div>
+            <div class="thumb-label rtl-only">شاشة ٥</div>
+          </div>
+        </div>
+
+        <!-- Caption -->
+        <div class="screenshot-caption" id="screenshotCaption">
+          <div class="caption-num" id="captionNum">01</div>
+          <div class="caption-divider"></div>
+          <div class="caption-text-wrap">
+            <div class="caption-title ltr-only" id="captionTitleEn">POS & Service Selection</div>
+            <div class="caption-title rtl-only" id="captionTitleAr">نقطة البيع واختيار الخدمات</div>
+            <div class="caption-desc ltr-only" id="captionDescEn">The main point-of-sale interface — browse service categories, add items to the session, and manage client bookings in real time.</div>
+            <div class="caption-desc rtl-only" id="captionDescAr">واجهة نقطة البيع الرئيسية — تصفح فئات الخدمة وأضف العناصر إلى الجلسة وأدر حجوزات العملاء في الوقت الفعلي.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- SERVICES SHOWCASE -->
   <div class="services-section reveal">
     <div class="services-inner">
@@ -776,6 +1080,7 @@
   </footer>
 
   <script>
+    // ─── Language Toggle ───
     function setLang(lang) {
       const html = document.documentElement;
       if (lang === 'ar') {
@@ -791,7 +1096,7 @@
       }
     }
 
-    // Scroll reveal
+    // ─── Scroll reveal ───
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
     }, { threshold: 0.07 });
@@ -824,6 +1129,72 @@
       });
     }, { threshold: 0.1 });
     document.querySelectorAll('.services-grid').forEach(el => tileObs.observe(el));
+
+    // ─── Screenshot Carousel ───
+    const captionsEn = [
+      { title: 'POS & Service Selection',       desc: 'The main point-of-sale interface — browse service categories, add items to the session, and manage client bookings in real time.' },
+      { title: 'Checkout & Payment',             desc: 'Streamlined checkout flow with itemized service totals, discount support, and multiple payment method options.' },
+      { title: 'Reservations Calendar',          desc: 'Visual appointment calendar showing stylist availability, time slots, and client assignments at a glance.' },
+      { title: 'Staff & Analytics Dashboard',    desc: 'Manager-only view showing revenue trends, top-performing stylists, and daily performance metrics.' },
+      { title: 'Inventory & Settings',           desc: 'Real-time inventory tracking for retail products and salon supplies, with full system configuration options.' },
+    ];
+    const captionsAr = [
+      { title: 'نقطة البيع واختيار الخدمات',     desc: 'واجهة نقطة البيع الرئيسية — تصفح فئات الخدمة وأضف العناصر إلى الجلسة وأدر حجوزات العملاء في الوقت الفعلي.' },
+      { title: 'الدفع وإتمام العملية',            desc: 'تدفق دفع مبسط مع تفاصيل الخدمات ودعم الخصومات وخيارات متعددة لطرق الدفع.' },
+      { title: 'تقويم الحجوزات',                 desc: 'تقويم مواعيد مرئي يعرض إتاحة المصففين والفترات الزمنية وتعيينات العملاء دفعة واحدة.' },
+      { title: 'لوحة الموظفين والتحليلات',        desc: 'عرض حصري للمدير يعرض اتجاهات الإيرادات وأفضل المصففين أداءً ومقاييس الأداء اليومي.' },
+      { title: 'المخزون والإعدادات',              desc: 'تتبع المخزون في الوقت الفعلي للمنتجات ومستلزمات الصالون مع خيارات تهيئة النظام الكاملة.' },
+    ];
+
+    let current = 0;
+    const slides  = document.querySelectorAll('.carousel-slide');
+    const thumbs  = document.querySelectorAll('.thumb');
+    const dots    = document.querySelectorAll('.carousel-dot');
+    const counter = document.getElementById('slideCounter');
+
+    function goTo(idx) {
+      slides[current].classList.remove('active');
+      thumbs[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = (idx + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      thumbs[current].classList.add('active');
+      dots[current].classList.add('active');
+      counter.textContent = `${current + 1} / ${slides.length}`;
+      // Update caption
+      const isRtl = document.documentElement.getAttribute('dir') === 'rtl';
+      document.getElementById('captionNum').textContent = String(current + 1).padStart(2, '0');
+      document.getElementById('captionTitleEn').textContent = captionsEn[current].title;
+      document.getElementById('captionDescEn').textContent  = captionsEn[current].desc;
+      document.getElementById('captionTitleAr').textContent = captionsAr[current].title;
+      document.getElementById('captionDescAr').textContent  = captionsAr[current].desc;
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+    document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+
+    thumbs.forEach(t => t.addEventListener('click', () => goTo(+t.dataset.index)));
+    dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.index)));
+
+    // Keyboard navigation
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft')  goTo(current - 1);
+      if (e.key === 'ArrowRight') goTo(current + 1);
+    });
+
+    // Touch / swipe support
+    let touchStartX = 0;
+    const mainEl = document.getElementById('carouselMain');
+    mainEl.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    mainEl.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) goTo(dx < 0 ? current + 1 : current - 1);
+    });
+
+    // Auto-play
+    let autoPlay = setInterval(() => goTo(current + 1), 4500);
+    mainEl.addEventListener('mouseenter', () => clearInterval(autoPlay));
+    mainEl.addEventListener('mouseleave', () => { autoPlay = setInterval(() => goTo(current + 1), 4500); });
   </script>
 </body>
 </html>
